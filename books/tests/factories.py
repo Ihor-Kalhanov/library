@@ -8,9 +8,9 @@ faker = FakerFactory.create()
 class BookFactory(factory.django.DjangoModelFactory):
     title = factory.LazyAttribute(lambda x: faker.name())
     descriprion = factory.LazyAttribute(lambda x: faker.name())
-    relase_date = factory.LazyAttribute(lambda x: now())
-    created_at = factory.LazyAttribute(lambda x: now())
-    updated_at = factory.LazyAttribute(lambda x: now())
+    relase_date = factory.LazyAttribute(lambda x: datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S.%f)"))
+    created_at = factory.LazyAttribute(lambda x: datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S.%f)"))
+    updated_at = factory.LazyAttribute(lambda x: datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S.%f)"))
     class Meta:
         model = Book
 

@@ -1,5 +1,4 @@
 import pytest
-import factory
 from books.serializers import Bookserializer
 from books.tests.factories import BookFactory
 
@@ -25,6 +24,7 @@ class TestBookSerializer:
         }
         serializer = Bookserializer(book)
         assert serializer.data == expected_serialized_data
+        # assert serializer.is_valid()
 
 
 
