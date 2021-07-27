@@ -1,7 +1,6 @@
 import pytest
-
 from books.models import Book
-
+from .factories import BookFactory
 
 @pytest.fixture
 def book():
@@ -13,4 +12,3 @@ def book():
     )
 
     return instance
-

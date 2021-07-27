@@ -12,7 +12,6 @@ class TestBookSerializer:
         serializer = Bookserializer(book)
 
         assert serializer.data
-        assert serializer.is_valid
 
     def test_serialize_data(self):
         book = BookFactory.build()
@@ -22,7 +21,11 @@ class TestBookSerializer:
             "relase_date": book.relase_date,
             "created_at": book.created_at,
             "updated_at": book.updated_at
+
         }
         serializer = Bookserializer(book)
         assert serializer.data == expected_serialized_data
+
+
+
 

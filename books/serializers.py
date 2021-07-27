@@ -8,6 +8,7 @@ from rest_framework.validators import UniqueValidator
 
 
 class Bookserializer(ModelSerializer):
+    relase_date = serializers.DateTimeField(format="%Y-%m-%d:%H:%M%S")
 
     def validate(self, data):
         if data['relase_date'] > datetime.date.today():
@@ -18,4 +19,4 @@ class Bookserializer(ModelSerializer):
 
     class Meta:
         model = Book
-        fields = ('title', 'descriprion', 'relase_date','created_at', 'updated_at',)
+        fields = ('title', 'descriprion', 'relase_date', 'created_at', 'updated_at',)
