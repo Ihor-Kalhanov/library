@@ -17,14 +17,15 @@ class TestBookSerializer:
         expected_serialized_data = {
             "title": book.title,
             "descriprion": book.descriprion,
-            "relase_date": book.relase_date,
+            "phone_number": book.phone_number,
             "created_at": book.created_at,
             "updated_at": book.updated_at
-
         }
-        serializer = Bookserializer(book)
+        serializer = Bookserializer(data=expected_serialized_data)
+
+        assert serializer.is_valid()
         assert serializer.data == expected_serialized_data
-        # assert serializer.is_valid()
+
 
 
 

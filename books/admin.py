@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin
 
 class CustomBookAdmin(admin.ModelAdmin):
     model = Book
-    list_display = ('title','descriprion', 'relase_date')
+    list_display = ('title','descriprion', 'phone_number')
 
 
 

@@ -1,6 +1,6 @@
 import pytest
-from django.urls import reverse
 from http import HTTPStatus
+
 pytestmark = pytest.mark.django_db
 
 class TestBookModel:
