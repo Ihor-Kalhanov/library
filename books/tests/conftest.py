@@ -1,3 +1,5 @@
+import datetime
+
 import pytest
 from books.models import Book
 from django.contrib.auth.models import User
@@ -11,6 +13,7 @@ def book():
         title="test_book",
         descriprion="test_description",
         phone_number=12345,
+        created_at=datetime.datetime.now()
     )
 
     return instance
@@ -31,3 +34,7 @@ def user_fixture():
 @pytest.fixture
 def api_client():
     return APIClient()
+
+@pytest.fixture
+def user_client(django_user_model, api_client):
+    return api_client.force_login(django_user_model.objects.create_user(username='username', password='password'))

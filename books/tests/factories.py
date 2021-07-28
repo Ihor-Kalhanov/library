@@ -1,16 +1,16 @@
 import factory
 from faker import Factory as FakerFactory
 from books.models import Book
-from django.utils.timezone import now
+from model_bakery import baker
 import datetime
 faker = FakerFactory.create()
 
 class BookFactory(factory.django.DjangoModelFactory):
     title = factory.LazyAttribute(lambda x: faker.name())
     descriprion = factory.LazyAttribute(lambda x: faker.name())
-    phone_number = factory.LazyAttribute(lambda x: faker.random_number(digits=10))
-    created_at = factory.LazyAttribute(lambda x: datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S.%f)"))
-    updated_at = factory.LazyAttribute(lambda x: datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S.%f)"))
+    phone_number = factory.LazyAttribute(lambda x: faker.numerify(text='###'))
+    created_at = factory.LazyAttribute(lambda x: datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ'))
+    updated_at = factory.LazyAttribute(lambda x: datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ'))
 
     class Meta:
         model = Book

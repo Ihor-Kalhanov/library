@@ -1,7 +1,8 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import get_object_or_404
 from books.models import Book
+from books.permissions import IsOwnerOrAdminOrReadOnly
 from books.serializers import Bookserializer
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,8 +10,11 @@ from rest_framework import status
 
 class BooksView(viewsets.ViewSet):
     permission_classes_by_action = {'create': [IsAuthenticated],
-                                    'list': [IsAuthenticated, ],
-                                    'retrieve': [IsAuthenticated],}
+                                    'list': [IsAuthenticated ],
+                                    'retrieve': [IsAuthenticated],
+                                    'update': [IsOwnerOrAdminOrReadOnly],
+                                    'destroy':[IsOwnerOrAdminOrReadOnly],
+                                    }
 
     def list(self, request):
         queryset = Book.objects.all()
@@ -43,7 +47,6 @@ class BooksView(viewsets.ViewSet):
         book = Book.objects.get(pk=pk)
         book.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
 
     def get_permissions(self):
         try:
