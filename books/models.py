@@ -1,13 +1,15 @@
 import datetime
 
+from django.contrib.auth import get_user_model
 from django.db import models
 
-from django.utils.timezone import now
+
 
 
 class Book(models.Model):
     title = models.CharField(max_length=100)
-    descriprion = models.CharField(max_length=255, null=True)
+    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    description = models.CharField(max_length=255, null=True)
     phone_number = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

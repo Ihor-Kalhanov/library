@@ -1,5 +1,6 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.generics import get_object_or_404
 from books.models import Book
 from books.permissions import IsOwnerOrAdminOrReadOnly
@@ -10,11 +11,12 @@ from rest_framework import status
 
 class BooksView(viewsets.ViewSet):
     permission_classes_by_action = {'create': [IsAuthenticated],
-                                    'list': [IsAuthenticated ],
+                                    'list': [IsAuthenticated],
                                     'retrieve': [IsAuthenticated],
                                     'update': [IsOwnerOrAdminOrReadOnly],
-                                    'destroy':[IsOwnerOrAdminOrReadOnly],
+                                    'destroy': [IsOwnerOrAdminOrReadOnly],
                                     }
+
 
     def list(self, request):
         queryset = Book.objects.all()
@@ -22,10 +24,12 @@ class BooksView(viewsets.ViewSet):
         return Response(serializer.data)
 
     def create(self, request):
+        # data = request.data
+        # request.data['owner'] = self.request.user.email
         serializer = Bookserializer(data=request.data)
 
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(owner=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -39,7 +43,7 @@ class BooksView(viewsets.ViewSet):
         book = Book.objects.get(pk=pk)
         serializer = Bookserializer(book, data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(owner=self.request.user)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
