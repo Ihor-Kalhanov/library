@@ -2,7 +2,7 @@ import pytest
 import factory
 
 from books.serializers import Bookserializer
-from books.tests.factories import BookFactory
+from tests.factories import BookFactory
 
 pytestmark = pytest.mark.unit
 

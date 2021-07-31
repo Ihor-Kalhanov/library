@@ -24,8 +24,6 @@ class BooksView(viewsets.ViewSet):
         return Response(serializer.data)
 
     def create(self, request):
-        # data = request.data
-        # request.data['owner'] = self.request.user.email
         serializer = Bookserializer(data=request.data)
 
         if serializer.is_valid():

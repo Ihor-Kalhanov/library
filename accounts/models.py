@@ -9,7 +9,7 @@ from accounts.managers import CustomUserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(_('email address'),  validators=[validators.validate_email], unique=True)
+    email = models.EmailField(_('email address'), validators=[validators.validate_email], unique=True)
     username = models.CharField(max_length=20, blank=True, null=True)
     first_name = models.CharField(max_length=50, blank=True, null=True)
     last_name = models.CharField(max_length=50, blank=True, null=True)
@@ -26,7 +26,4 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def get_absolute_url(self):
-        return "/users/%i/" % (self.pk)
-
-
-
+        return "/users/%i/" % self.pk
