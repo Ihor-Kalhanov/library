@@ -1,21 +1,21 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from rest_framework.fields import SlugField
+from rest_framework.fields import CurrentUserDefault
 from rest_framework.serializers import ModelSerializer
-import datetime
 
+from accounts.serializers import UserSerializer
 from books.models import Book
-from rest_framework.validators import UniqueValidator
+
 
 
 class Bookserializer(ModelSerializer):
-
-    def validate(self, data):
-        if data['relase_date'] > datetime.date.today():
-            raise serializers.ValidationError({
-                "relase_date": "The date cannot be in the past!"
-            })
-        return data
+    owner = serializers.StringRelatedField(read_only=True,)
 
     class Meta:
         model = Book
-        fields = ('title', 'descriprion', 'relase_date','created_at', 'updated_at',)
+        fields = ("id", "title", "owner", "description", "phone_number", "created_at", "updated_at")
+
+
+    def to_representation(self, instance):
+        self.fields['owner'] = UserSerializer(read_only=True)
+        return super(Bookserializer, self).to_representation(instance)
